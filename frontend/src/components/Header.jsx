@@ -1,9 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 
 const Header = () => {
-  console.log(window.location.pathname);
-
   const activeStyle = { color: '#fff' };
 
   return (
