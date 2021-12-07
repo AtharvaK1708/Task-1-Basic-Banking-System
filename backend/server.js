@@ -5,13 +5,15 @@ import transactionRoutes from './routes/transactionRoutes.js';
 
 import dotenv from 'dotenv';
 import connectDb from './connectDb.js';
+import cors from 'cors';
 const app = express();
 
 dotenv.config();
 
-connectDb();
-
+app.use(cors());
 app.use(express.json());
+
+connectDb();
 
 app.use('/api/customers', customerRoutes);
 app.use('/api/transactions', transactionRoutes);

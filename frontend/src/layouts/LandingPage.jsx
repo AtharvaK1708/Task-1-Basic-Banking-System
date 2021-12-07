@@ -22,13 +22,13 @@ const LandingPage = () => {
                 <br /> to TSF Online Banking Services
               </h1>
               <br />
-              <h3 style={{ fontWeight: '600' }}>
+              <h3 className="responsive" style={{ fontWeight: '600' }}>
                 Lightning fast money transfers at the click of a button!
               </h3>
             </Col>
             <Col sm={12} lg={6}>
               <img
-                style={{ position: 'relative', top: '20%', left: '8.2rem' }}
+                style={{ position: 'relative', top: '20%', left: '6.2rem' }}
                 src="/images/vector3.png"
                 alt="vector"
               />

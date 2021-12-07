@@ -6,13 +6,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar
-        bg="dark"
-        expand="lg"
-        variant="dark"
-        style={{ height: '90px' }}
-        collapseOnSelect
-      >
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand>
             <img
@@ -21,8 +15,10 @@ const Header = () => {
               alt="main-logo"
             />
           </Navbar.Brand>
-          <Navbar.Collapse className="justify-content-end">
-            <Nav className="">
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto"></Nav>
+            <Nav>
               <Nav.Link
                 style={window.location.pathname === '/' ? activeStyle : {}}
                 href="/"

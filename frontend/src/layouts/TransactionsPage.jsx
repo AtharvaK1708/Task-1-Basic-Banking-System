@@ -36,9 +36,9 @@ const TransactionsPage = () => {
             </tr>
           </thead>
           <tbody>
-            {transactions.map((transaction) => (
-              <tr>
-                <td>1</td>
+            {transactions.map((transaction, i) => (
+              <tr key={transaction._id}>
+                <td>{i + 1}</td>
                 <td>{transaction.fromName}</td>
                 <td>{transaction.toName}</td>
                 <td>&#8377; {transaction.amount}</td>

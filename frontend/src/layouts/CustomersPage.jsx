@@ -7,15 +7,42 @@ import {
   Button,
   Modal,
   Form,
+  Alert,
 } from 'react-bootstrap';
 import Header from '../components/Header';
 import axios from 'axios';
 
 const CustomersPage = () => {
   const [show, setShow] = useState(false);
-  const [mainCustomer, setMainCustomer] = useState({});
-
   const [customers, setCustomers] = useState([]);
+  const [mainCustomer, setMainCustomer] = useState({});
+  const [showAlert, setShowAlert] = useState(false);
+
+  const addNewTransaction = async (fromName, toName, amount) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        },
+      };
+
+      console.log('THIS IS IN FUNCTION : ', { fromName, toName, amount });
+
+      await axios.post(
+        'http://localhost:5000/api/transactions',
+        {
+          fromName,
+          toName,
+          amount,
+        },
+        config
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getCustomersFromServer = async () => {
     const { data } = await axios.get('/api/customers');
@@ -24,18 +51,18 @@ const CustomersPage = () => {
 
   useEffect(() => {
     getCustomersFromServer();
-  }, []);
+  }, [customers]);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+  };
+
   const handleShow = (e) => {
-    // console.log(e);
     setShow(true);
   };
 
   const mixedFunction = () => {
-    console.log(mainCustomer);
     handleShow();
-    // setCustomer(customer);
   };
 
   const [reciever, setReciever] = useState('');
@@ -43,11 +70,13 @@ const CustomersPage = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(reciever, amount);
+
+    addNewTransaction(mainCustomer?.name, reciever, amount);
 
     setReciever('');
     setAmount(0);
     setShow(false);
+    setShowAlert(true);
   };
 
   return (
@@ -56,13 +85,36 @@ const CustomersPage = () => {
       <Container>
         <Card className="my-4">
           <Card.Header>
-            <h1 style={{ fontWeight: '600' }}>View All Customers</h1>
+            <h1 style={{ fontWeight: '600' }} id="heading">
+              View All Customers
+            </h1>
+            <Alert className="mt-4" show={showAlert} variant="success">
+              <Alert.Heading>Transaction Successful🎉😀</Alert.Heading>
+              <p>
+                Congratulations! Your transaction was successfull. You can check
+                the transaction history in the transactions tab!
+              </p>
+              <hr />
+              <div className="d-flex justify-content-end">
+                <Button
+                  onClick={() => setShowAlert(false)}
+                  variant="outline-success"
+                >
+                  Click to close!
+                </Button>
+              </div>
+            </Alert>
           </Card.Header>
         </Card>
         {customers.map((customer) => (
           <Row>
             <Col>
-              <Card bg="dark" text="light" className="p-3 my-2">
+              <Card
+                key={customer._id}
+                bg="dark"
+                text="light"
+                className="p-3 my-2"
+              >
                 <Row>
                   <Col>
                     <Card.Title>Customer Details</Card.Title>
@@ -123,12 +175,6 @@ const CustomersPage = () => {
                     <option value={customer.name}>{customer.name}</option>
                   ))}
                 </Form.Select>
-                {/* <Form.Control
-                  type="text"
-                  value={reciever}
-                  placeholder="Enter reciever"
-                  
-                /> */}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -136,6 +182,7 @@ const CustomersPage = () => {
                 <Form.Control
                   type="number"
                   value={amount}
+                  min={1}
                   placeholder="Amount to be transfered"
                   onChange={(e) => setAmount(e.target.value)}
                 />
