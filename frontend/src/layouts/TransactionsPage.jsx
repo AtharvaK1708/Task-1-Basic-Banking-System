@@ -37,11 +37,11 @@ const TransactionsPage = () => {
           </thead>
           <tbody>
             {transactions.map((transaction, i) => (
-              <tr key={transaction._id}>
+              <tr key={transaction?._id}>
                 <td>{i + 1}</td>
-                <td>{transaction.fromName}</td>
-                <td>{transaction.toName}</td>
-                <td>&#8377; {transaction.amount}</td>
+                <td>{transaction?.fromName}</td>
+                <td>{transaction?.toName}</td>
+                <td>&#8377; {transaction?.amount}</td>
                 <td>
                   {moment(
                     new Date(transaction.createdAt),

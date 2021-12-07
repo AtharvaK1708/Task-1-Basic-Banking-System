@@ -110,7 +110,7 @@ const CustomersPage = () => {
           <Row>
             <Col>
               <Card
-                key={customer._id}
+                key={customer?._id}
                 bg="dark"
                 text="light"
                 className="p-3 my-2"
@@ -119,16 +119,18 @@ const CustomersPage = () => {
                   <Col>
                     <Card.Title>Customer Details</Card.Title>
                     <hr />
-                    <Card.Text>Customer Name: {customer.name}</Card.Text>
-                    <Card.Text>Customer Email: {customer.email}</Card.Text>
-                    <Card.Text>Customer Contact: {customer.contact}</Card.Text>
+                    <Card.Text>Customer Name: {customer?.name}</Card.Text>
+                    <Card.Text>Customer Email: {customer?.email}</Card.Text>
+                    <Card.Text>Customer Contact: {customer?.contact}</Card.Text>
                   </Col>
                   <Col>
                     <Card.Title>Account Details</Card.Title>
                     <hr />
-                    <Card.Text>Account Number : {customer.accountNo}</Card.Text>
                     <Card.Text>
-                      Available Balance : &#8377;{customer.accountBalance}
+                      Account Number : {customer?.accountNo}
+                    </Card.Text>
+                    <Card.Text>
+                      Available Balance : &#8377;{customer?.accountBalance}
                     </Card.Text>
                   </Col>
                   <Col className="d-flex align-items-center justify-content-center">
