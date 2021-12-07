@@ -162,6 +162,7 @@ const CustomersPage = () => {
                   </Col>
                   <Col className="d-flex align-items-center justify-content-center">
                     <Button
+                      disabled={customer.accountBalance === 0}
                       style={{ width: '360px', height: '50px' }}
                       variant="outline-info"
                       onClick={(e) => {
