@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Container, Table } from 'react-bootstrap';
 import Header from '../components/Header';
-import transactions from '../DEMO_DATA/transactions';
 import moment from 'moment';
+import axios from 'axios';
 
 const TransactionsPage = () => {
+  const [transactions, setTransactions] = useState([]);
+
+  const getAllTransactionsFromServer = async () => {
+    const { data } = await axios.get('/api/transactions');
+    setTransactions(data);
+  };
+
+  useEffect(() => {
+    getAllTransactionsFromServer();
+  });
+
   return (
     <div>
       <Header />
@@ -27,9 +38,9 @@ const TransactionsPage = () => {
           <tbody>
             {transactions.map((transaction) => (
               <tr>
-                <td>{transaction.id}</td>
-                <td>{transaction.from}</td>
-                <td>{transaction.to}</td>
+                <td>1</td>
+                <td>{transaction.fromName}</td>
+                <td>{transaction.toName}</td>
                 <td>&#8377; {transaction.amount}</td>
                 <td>
                   {moment(

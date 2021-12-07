@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   Row,
@@ -9,11 +9,22 @@ import {
   Form,
 } from 'react-bootstrap';
 import Header from '../components/Header';
-import customers from '../DEMO_DATA/customers';
+import axios from 'axios';
 
 const CustomersPage = () => {
   const [show, setShow] = useState(false);
   const [mainCustomer, setMainCustomer] = useState({});
+
+  const [customers, setCustomers] = useState([]);
+
+  const getCustomersFromServer = async () => {
+    const { data } = await axios.get('/api/customers');
+    setCustomers(data);
+  };
+
+  useEffect(() => {
+    getCustomersFromServer();
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = (e) => {
