@@ -31,7 +31,7 @@ const CustomersPage = () => {
       console.log('THIS IS IN FUNCTION : ', { fromName, toName, amount });
 
       await axios.post(
-        '/api/transactions',
+        'https://tsfbank1708.herokuapp.com/api/transactions',
         {
           fromName,
           toName,
