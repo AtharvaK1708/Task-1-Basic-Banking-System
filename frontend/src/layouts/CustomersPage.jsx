@@ -68,15 +68,24 @@ const CustomersPage = () => {
   const [reciever, setReciever] = useState('');
   const [amount, setAmount] = useState(0);
 
+  const [redAlert, setRedAlert] = useState(false);
+
   const submitHandler = (e) => {
     e.preventDefault();
 
-    addNewTransaction(mainCustomer?.name, reciever, amount);
+    if (amount === 0 || amount > mainCustomer.accountBalance) {
+      setReciever('');
+      setAmount(0);
+      setShow(false);
+      setRedAlert(true);
+    } else {
+      addNewTransaction(mainCustomer?.name, reciever, amount);
 
-    setReciever('');
-    setAmount(0);
-    setShow(false);
-    setShowAlert(true);
+      setReciever('');
+      setAmount(0);
+      setShow(false);
+      setShowAlert(true);
+    }
   };
 
   return (
@@ -88,6 +97,7 @@ const CustomersPage = () => {
             <h1 style={{ fontWeight: '600' }} id="heading">
               View All Customers
             </h1>
+
             <Alert className="mt-4" show={showAlert} variant="success">
               <Alert.Heading>Transaction Successful🎉😀</Alert.Heading>
               <p>
@@ -99,6 +109,23 @@ const CustomersPage = () => {
                 <Button
                   onClick={() => setShowAlert(false)}
                   variant="outline-success"
+                >
+                  Click to close!
+                </Button>
+              </div>
+            </Alert>
+
+            <Alert className="mt-4" show={redAlert} variant="danger">
+              <Alert.Heading>Transaction Unsuccessfull</Alert.Heading>
+              <p>
+                Your transaction was unsuccessfull! Make sure that the value's
+                you enter are valid.
+              </p>
+              <hr />
+              <div className="d-flex justify-content-end">
+                <Button
+                  onClick={() => setRedAlert(false)}
+                  variant="outline-danger"
                 >
                   Click to close!
                 </Button>
@@ -185,6 +212,7 @@ const CustomersPage = () => {
                   type="number"
                   value={amount}
                   min={1}
+                  max={mainCustomer.accountBalance}
                   placeholder="Amount to be transfered"
                   onChange={(e) => setAmount(e.target.value)}
                 />
