@@ -31,7 +31,7 @@ const CustomersPage = () => {
       console.log('THIS IS IN FUNCTION : ', { fromName, toName, amount });
 
       await axios.post(
-        'http://localhost:5000/api/transactions',
+        '/api/transactions',
         {
           fromName,
           toName,
